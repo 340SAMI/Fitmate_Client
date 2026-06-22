@@ -115,12 +115,20 @@ export default function Navbar() {
               </Dropdown.Popover>
             </Dropdown>
           ) : (
-            <Button
-              className="rounded-full bg-[#8B5CF6] px-5 font-semibold text-white hover:bg-[#7C3AED]"
-              onPress={() => (window.location.href = "/login")}
-            >
-              Login
-            </Button>
+            <>
+              <Button
+                className="rounded-full bg-[#8B5CF6] px-5 font-semibold text-white hover:bg-[#7C3AED]"
+                onPress={() => (window.location.href = "/authenticate/signin")}
+              >
+                Login
+              </Button>
+              <Button
+                className="rounded-full bg-[#8B5CF6] px-5 font-semibold text-white hover:bg-[#7C3AED]"
+                onPress={() => (window.location.href = "/authenticate/signup")}
+              >
+                Register
+              </Button>
+            </>
           )}
         </div>
 
@@ -187,13 +195,22 @@ export default function Navbar() {
                         </Button>
                       </div>
                     ) : (
-                      <Button
-                        slot="close"
-                        className="w-full rounded-full bg-[#8B5CF6] font-semibold text-white"
-                        onPress={() => (window.location.href = "/login")}
-                      >
-                        Login
-                      </Button>
+                      <>
+                        <Button
+                          slot="close"
+                          className="w-full rounded-full bg-[#8B5CF6] font-semibold text-white"
+                          onPress={() => (window.location.href = "/authenticate/signin")}
+                        >
+                          Login
+                        </Button>
+                        <Button
+                          slot="close"
+                          className="w-full rounded-full bg-white/5 font-semibold text-white"
+                          onPress={() => (window.location.href = "/authenticate/signup")}
+                        >
+                          Register
+                        </Button>
+                      </>
                     )}
                   </Drawer.Body>
                 </Drawer.Dialog>

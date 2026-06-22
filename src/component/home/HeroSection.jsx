@@ -75,7 +75,7 @@ export default function Hero() {
 
   return (
     <section className="bg-[#0F1013]">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_auto] lg:gap-10 lg:px-8 lg:py-24">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_auto] lg:gap-10 lg:px-8 lg:py-24">
 
         {/* Left: copy */}
         <div className="max-w-xl">
@@ -214,6 +214,8 @@ export default function Hero() {
         </div>
 
       </div>
+
+      <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#6C8EFF]/10 blur-[140px]" />
     </section>
   );
 }
