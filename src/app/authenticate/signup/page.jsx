@@ -66,7 +66,6 @@ export default function RegisterForm() {
       email,
       password,
       image: avatar || "",
-      callbackURL: "/dashboard",
     });
 
     if (error) {
@@ -76,7 +75,7 @@ export default function RegisterForm() {
     }
 
     toast.success("Account created successfully!");
-    setTimeout(() => router.push("/dashboard"), 1200);
+    setTimeout(() => router.push("/authenticate/signin"), 1200);
   };
 
   return (

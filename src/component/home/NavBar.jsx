@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Avatar,
   Button,
@@ -10,10 +10,7 @@ import {
   Drawer,
   Separator,
 } from "@heroui/react";
-
-// Replace with your real auth hook (e.g. useAuth from context/AuthProvider)
-// Shape assumed: { user: { name, email, image, role } | null, logOut: () => Promise<void> }
-import useAuth from "@/hooks/useAuth";
+import { useSession,  signOut } from "@/lib/auth-client";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -31,8 +28,15 @@ function getInitials(name = "") {
 }
 
 export default function Navbar() {
+  const router = useRouter();
   const pathname = usePathname();
-  const { user, logOut } = useAuth();
+  const { data: session, status } = useSession();
+  const user = session?.user ?? null;
+
+  const logOut = async () => {
+    await signOut();
+    router.push("/");
+  };
 
   const dashboardPath =
     user?.role === "admin"
@@ -89,31 +93,41 @@ export default function Navbar() {
         {/* Desktop auth area */}
         <div className="hidden sm:flex items-center gap-3">
           {user ? (
-            <Dropdown placement="bottom end">
-              <Dropdown.Trigger className="rounded-full">
-                <Avatar size="sm" className="cursor-pointer ring-2 ring-[#8B5CF6]/40 transition hover:ring-[#8B5CF6]">
-                  {user.image && <Avatar.Image src={user.image} alt={user.name} />}
-                  <Avatar.Fallback>{getInitials(user.name)}</Avatar.Fallback>
-                </Avatar>
-              </Dropdown.Trigger>
-              <Dropdown.Popover>
-                <Dropdown.Menu>
-                  <Dropdown.Section>
-                    <div className="px-2 py-1.5">
-                      <p className="text-sm font-medium">{user.name}</p>
-                      <p className="text-xs text-foreground-secondary">{user.email}</p>
-                    </div>
-                  </Dropdown.Section>
-                  <Separator />
-                  <Dropdown.Item id="dashboard" textValue="Dashboard" href={dashboardPath}>
-                    <Label>Dashboard</Label>
-                  </Dropdown.Item>
-                  <Dropdown.Item id="logout" textValue="Log out" variant="danger" onAction={logOut}>
-                    <Label>Log out</Label>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown.Popover>
-            </Dropdown>
+            <>
+              <Dropdown placement="bottom end">
+                <Dropdown.Trigger className="rounded-full">
+                  <Avatar size="sm" className="cursor-pointer ring-2 ring-[#8B5CF6]/40 transition hover:ring-[#8B5CF6]">
+                    {user.image && <Avatar.Image src={user.image} alt={user.name} />}
+                    <Avatar.Fallback>{getInitials(user.name)}</Avatar.Fallback>
+                  </Avatar>
+                </Dropdown.Trigger>
+                <Dropdown.Popover>
+                  <Dropdown.Menu>
+                    <Dropdown.Section>
+                      <div className="px-2 py-1.5">
+                        <p className="text-sm font-medium">{user.name}</p>
+                        <p className="text-xs text-foreground-secondary">{user.email}</p>
+                      </div>
+                    </Dropdown.Section>
+                    <Separator />
+                    <Dropdown.Item id="dashboard" textValue="Dashboard" href={dashboardPath}>
+                      <Label>Dashboard</Label>
+                    </Dropdown.Item>
+                    <Dropdown.Item id="logout" textValue="Log out" variant="danger" onAction={logOut}>
+                      <Label>Log out</Label>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown.Popover>
+              </Dropdown>
+
+              <Button
+                size="sm"
+                className="rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-400"
+                onPress={logOut}
+              >
+                Log out
+              </Button>
+            </>
           ) : (
             <>
               <Button
@@ -179,7 +193,7 @@ export default function Navbar() {
                     <Separator className="my-3" />
 
                     {user ? (
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                           <Avatar size="sm">
                             {user.image && <Avatar.Image src={user.image} alt={user.name} />}
@@ -190,7 +204,7 @@ export default function Navbar() {
                             <p className="text-xs text-white/50">{user.email}</p>
                           </div>
                         </div>
-                        <Button slot="close" size="sm" variant="soft" color="danger" onPress={logOut}>
+                        <Button slot="close" className="w-full rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-400" onPress={logOut}>
                           Log out
                         </Button>
                       </div>
