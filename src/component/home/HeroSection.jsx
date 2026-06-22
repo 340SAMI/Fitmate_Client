@@ -133,7 +133,7 @@ export default function Hero() {
 
         {/* Right: rotating card stack */}
         <div
-          className="relative mx-auto w-full max-w-sm shrink-0 pb-10 lg:w-[820px]"
+          className="relative mx-auto w-full max-w-sm shrink-0 pb-10 lg:w-[420px]"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
