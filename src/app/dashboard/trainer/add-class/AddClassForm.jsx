@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
-import { createJob } from "@/lib/actions/Classes";
+import { createClass } from "@/lib/actions/Classes";
 
 const CATEGORIES = ["Yoga", "Cardio", "HIIT", "Strength", "Pilates", "CrossFit", "Boxing", "Cycling"];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
@@ -89,12 +89,12 @@ export default function AddClassForm() {
       description:  formData.get("description"),
       trainerId:    session?.user?.id,
       trainerName:  session?.user?.name,
-      status:       "pending",
+      status:       "Pending",
       bookingCount: 0,
     };
 
     try {
-      const response = await createJob(payload);
+      const response = await createClass(payload);
       console.log("response from client", response);
       if (response?.ok === false) throw new Error(response?.message ?? "Failed to create class");
       toast.success("Class submitted for approval!");

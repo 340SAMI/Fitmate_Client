@@ -14,3 +14,10 @@ export const serverMutation = async (path, data, method = 'POST' ) => {
 
     return res.json()
 }
+
+
+export const serverFetch = async (path)=>{
+    const res = await fetch(`${baseUrl}${path}`)
+
+    return res.json()
+}
