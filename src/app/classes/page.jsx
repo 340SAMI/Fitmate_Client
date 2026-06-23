@@ -6,10 +6,10 @@ export default async function ClassesPage({ searchParams }) {
   const search = filters.search ?? "";
   const category = filters.category ?? "all";
 
+
   const params = new URLSearchParams();
   if (search) params.set("search", search);
   if (category !== "all") params.set("category", category);
-
 
   const response = await getClasses(params.toString())
 
