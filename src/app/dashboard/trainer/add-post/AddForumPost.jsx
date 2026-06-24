@@ -77,7 +77,6 @@ export default function AddForumPostForm({session}) {
     try {
 
       const data = await createForum(payload)
-      if (!data.insertedId) throw new Error(data.message ?? "Failed to create post");
       toast.success("Post published!");
       setTimeout(() => router.push("/dashboard/trainer/my-posts"), 1200);
     } catch (err) {
