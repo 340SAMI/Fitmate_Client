@@ -1,3 +1,3 @@
-export default function MyPosts() {
-  return <>My Forum Posts</>;
+export default function TrainerAddPost() {
+  return <>Add Forum Post</>;
 }

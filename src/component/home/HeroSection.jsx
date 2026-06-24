@@ -74,11 +74,12 @@ export default function Hero() {
   }, [paused]);
 
   return (
-    <section className="bg-[#0F1013]">
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_auto] lg:gap-10 lg:px-8 lg:py-24">
+    <section className="relative overflow-hidden bg-[#0A0B0F]">
+       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-[#8B5CF6]/8 blur-[120px]" />
+        <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-14 sm:py-16 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-8 lg:py-20">
 
         {/* Left: copy */}
-        <div className="max-w-xl">
+        <div className="w-full max-w-xl">
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8B5CF6]/30 bg-[#8B5CF6]/10 px-3 py-1 text-xs font-semibold tracking-wide text-[#C4B5FD]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#8B5CF6]" />
             Open now &middot; new member offers live
@@ -214,8 +215,6 @@ export default function Hero() {
         </div>
 
       </div>
-
-      <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#6C8EFF]/10 blur-[140px]" />
     </section>
   );
 }
