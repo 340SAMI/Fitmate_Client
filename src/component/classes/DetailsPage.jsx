@@ -1,46 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { getFavorite } from "@/lib/api/favorite";
+import { checkPurchase } from "@/lib/api/purchase.";
+import { deleteFavorite, setFavorite } from "@/lib/actions/favorites";
 
 export default function DetailsPage({ classes, userId }) {
   const router = useRouter();
   const [isBooking, setIsBooking] = useState(false);
   const [isFavoriting, setIsFavoriting] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
-  if (!classes) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0A0B0F]">
-        <p className="text-white/50">Class not found.</p>
-      </div>
-    );
-  }
+  const [isBooked, setIsBooked] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
-  const handleBookNow = async () => {
-    if (!userId) {
-      toast.error("Please sign in to book a class");
-      router.push("/authenticate/signin");
-      return;
-    }
-    setIsBooking(true);
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookings/check?userId=${userId}&classId=${classes._id}`
-      );
-      const data = await res.json();
-      if (data.alreadyBooked) {
-        toast.error("You have already booked this class");
-        return;
+  // On load — check if already booked and already favorited
+  useEffect(() => {
+  
+    const checkStatus = async () => {
+      try {
+
+        const bookingData = await checkPurchase(userId, classes._id)
+        const favoriteData = await getFavorite(userId, classes._id)
+
+        setIsBooked(bookingData.booked ?? false);
+        setIsFavorited((favoriteData.favorites?.length ?? 0) > 0);
+      } catch {
+        // silently fail — don't block the page
+      } finally {
+        setIsChecking(false);
       }
-      router.push(`/payment?classId=${classes._id}`);
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setIsBooking(false);
-    }
-  };
+    };
+
+    checkStatus();
+  }, [userId, classes?._id]);
 
   const handleFavorite = async () => {
     if (!userId) {
@@ -48,18 +43,21 @@ export default function DetailsPage({ classes, userId }) {
       return;
     }
     if (isFavorited) {
-      toast.info("Already saved to favorites");
-      return;
+      setIsFavorited(false);
+      deleteFavorite(userId, classes?._id)
+      toast.error("Removed from favorites!");
+      return
     }
     setIsFavoriting(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/favorites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, classId: classes._id }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Failed to save");
+
+      const favoriteData = {
+        ...classes,
+        classId: classes._id,
+        userId
+      }
+      const data = await setFavorite(favoriteData)
+      
       setIsFavorited(true);
       toast.success("Added to favorites!");
     } catch (err) {
@@ -68,6 +66,14 @@ export default function DetailsPage({ classes, userId }) {
       setIsFavoriting(false);
     }
   };
+
+  if (!classes) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#0A0B0F]">
+        <p className="text-white/50">Class not found.</p>
+      </div>
+    );
+  }
 
   const difficultyColor = {
     Beginner: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/25",
@@ -87,14 +93,13 @@ export default function DetailsPage({ classes, userId }) {
   return (
     <div className="min-h-screen bg-[#0A0B0F]">
 
-      {/* Hero image — using plain img to avoid Next.js Image stacking context issues */}
+      {/* Hero image */}
       <div style={{ position: "relative", height: "400px", width: "100%", overflow: "hidden" }}>
         <img
           src={classes.image}
           alt={classes.className}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         />
-        {/* Gradient overlay */}
         <div style={{
           position: "absolute", inset: 0,
           background: "linear-gradient(to top, #0A0B0F 0%, rgba(10,11,15,0.6) 50%, rgba(10,11,15,0.2) 100%)"
@@ -135,7 +140,6 @@ export default function DetailsPage({ classes, userId }) {
                 by <span className="font-medium text-white/70">{classes.trainerName}</span>
               </p>
             </div>
-            {/* Price — right aligned next to title */}
             <div className="shrink-0 rounded-2xl border border-white/10 bg-[#16181C] px-5 py-3 text-right">
               <span className="block text-2xl font-bold text-white">${classes.price}</span>
               <span className="text-xs text-white/35">per session</span>
@@ -214,30 +218,35 @@ export default function DetailsPage({ classes, userId }) {
                 Secure your spot before it fills up
               </p>
 
-              {/* Checkout */} 
-
-              <form action="/api/checkout_sessions" method="POST" className="mb-3 w-full">
-                <input type="hidden" name="classId" value={classes._id} />
-                <input type="hidden" name="price" value={classes.price} />
-                <input type="hidden" name="userId" value={userId} />
-                <input type="hidden" name="name" value={classes.className} />
-                <input type="hidden" name="trainerId" value={classes.trainerId} />
-                
-                
-             
-                <button
-                  type="submit"
-                  role="link"
-                  className="w-full rounded-xl bg-[#8B5CF6] py-3 text-sm font-bold text-white shadow-lg shadow-[#8B5CF6]/25 transition hover:bg-[#7C3AED]"
-                >
-                  Checkout
-                </button>
-              </form>
+              {/* Checkout / Already Booked */}
+              {isChecking ? (
+                <div className="mb-3 w-full rounded-xl bg-white/5 py-3 text-center text-sm text-white/30 animate-pulse">
+                  Checking status…
+                </div>
+              ) : isBooked ? (
+                <div className="mb-3 w-full rounded-xl border border-emerald-500/30 bg-emerald-500/10 py-3 text-center text-sm font-semibold text-emerald-400">
+                  ✓ Already Booked
+                </div>
+              ) : (
+                <form action="/api/checkout_sessions" method="POST" className="mb-3 w-full">
+                  <input type="hidden" name="classId" value={classes._id} />
+                  <input type="hidden" name="price" value={classes.price} />
+                  <input type="hidden" name="userId" value={userId} />
+                  <input type="hidden" name="name" value={classes.className} />
+                  <input type="hidden" name="trainerId" value={classes.trainerId} />
+                  <button
+                    type="submit"
+                    className="w-full rounded-xl bg-[#8B5CF6] py-3 text-sm font-bold text-white shadow-lg shadow-[#8B5CF6]/25 transition hover:bg-[#7C3AED]"
+                  >
+                    Checkout →
+                  </button>
+                </form>
+              )}
 
               {/* Add to Favorites */}
               <button
                 onClick={handleFavorite}
-                disabled={isFavoriting || isFavorited}
+                disabled={isFavoriting || isChecking}
                 className={`w-full rounded-xl border py-3 text-sm font-semibold transition disabled:opacity-60 ${
                   isFavorited
                     ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
