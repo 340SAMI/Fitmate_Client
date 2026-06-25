@@ -10,3 +10,8 @@ export const getClasses = async (querystring)=>{
 export const  getFamousClasses = async ()=>{
     return serverFetch(`/api/classes/popular`)
 }
+
+
+export const getClassesById = async (classId) => {
+    return serverFetch(`/api/classes/${classId}`);
+}

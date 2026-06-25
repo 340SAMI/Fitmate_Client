@@ -65,9 +65,6 @@ export default function ForumPostGridCard({ post, onDelete }) {
           </div>
         )}
 
-        <span className="absolute left-3 top-3 rounded-full border border-[#8B5CF6]/30 bg-[#8B5CF6]/20 px-3 py-1 text-xs font-semibold text-[#C4B5FD]">
-          {post.category ?? "Forum"}
-        </span>
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
@@ -86,7 +83,7 @@ export default function ForumPostGridCard({ post, onDelete }) {
           by <span className="font-medium text-white/70">{post.authorName}</span>
         </p>
 
-        <p className="text-sm leading-relaxed text-white/60 line-clamp-3">
+        <p className="text-sm leading-relaxed text-white/60 line-clamp-1">
           {post.description}
         </p>
 
