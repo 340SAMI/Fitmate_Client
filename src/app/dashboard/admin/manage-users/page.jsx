@@ -1,3 +1,9 @@
+import ManageUserLayout from "./ManageUserLayout";
+
 export default function ManageUsers() {
-  return <>Manage Users</>;
+  return <>
+  
+  <ManageUserLayout></ManageUserLayout>
+  
+  </>;
 }

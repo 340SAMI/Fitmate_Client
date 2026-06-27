@@ -50,7 +50,6 @@ export default function AdminStats({ user }) {
       setLoading(false);
     }
   };
-  // eslint-disable-next-line react-compiler/react-compiler
   useEffect(() => {
 
     if (user?.id) fetchStats();
@@ -72,13 +71,7 @@ export default function AdminStats({ user }) {
       <div className="max-w-7xl mx-auto space-y-6">
 
         {/* --- Header --- */}
-        <div className="flex items-center justify-between pb-5 border-b border-gray-900">
-          <div className="text-xs font-medium text-gray-500 space-x-2">
-            <span>Dashboard</span>
-            <span>&rsaquo;</span>
-            <span className="text-gray-300">Overview</span>
-          </div>
-        </div>
+
 
         {/* --- Row 1: Stat Cards --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

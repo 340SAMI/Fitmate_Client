@@ -1,5 +1,6 @@
 import { serverFetch } from "../core/Server"
 
-export const getUsers = async ()=>{
-    return serverFetch(`/api/admin/users`);
+export const getUsers = async (query)=>{
+    return serverFetch(`/api/admin/users${query}`);
 }
+
