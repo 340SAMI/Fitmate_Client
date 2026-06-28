@@ -105,7 +105,7 @@ export default function ManageUsers() {
         <div className="rounded-xl border border-white/[0.06] shadow-sm overflow-hidden">
 
           {/* Card Header */}
-          <div className="p-6 border-b bg-[#161520] border-white/[0.06] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="p-6 border-b bg-[#1A1D28] border-white/[0.06] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h2 className="text-base font-semibold text-white flex items-center gap-2">
                 <Users className="w-4 h-4 text-gray-500" />
@@ -131,7 +131,7 @@ export default function ManageUsers() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/[0.06] text-gray-400 text-xs tracking-wider uppercase bg-[#161520]">
+                <tr className="border-b border-white/[0.06] text-gray-400 text-xs tracking-wider uppercase bg-[#1A1D28]">
                   <th className="py-4 px-6 font-medium">User</th>
                   <th className="py-4 px-6 font-medium">Role</th>
                   <th className="py-4 px-6 font-medium">Status</th>
@@ -155,7 +155,7 @@ export default function ManageUsers() {
                   const adminDisabled = isBusy || isBlocked;
 
                   return (
-                    <tr key={user._id} className="hover:bg-white/[0.01] transition-colors group">
+                    <tr key={user._id} className="hover:bg-white/[0.01] transition-colors group bg-[#161520]">
 
                       {/* User */}
                       <td className="py-4 px-6 whitespace-nowrap">
@@ -321,7 +321,7 @@ export default function ManageUsers() {
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-white/[0.06] bg-[#161520]">
+          <div className="px-6 py-4 border-t border-white/[0.06] bg-[#1A1D28]">
             <p className="text-xs text-gray-500">
               {loading ? 'Loading...' : `Showing ${users.length} users`}
             </p>

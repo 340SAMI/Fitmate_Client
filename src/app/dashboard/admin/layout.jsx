@@ -4,8 +4,10 @@ import { requireRole } from "@/lib/core/Session";
 export default async function AdminDashboardLayout({ children }) {
   await requireRole("admin");
 
-  return <>
+  return <div className='bg-[#11131A]'>
 <DashboardHeader></DashboardHeader>
   {children}
-  </>;
+  </div>
+
+  
 }

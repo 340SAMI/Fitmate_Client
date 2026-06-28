@@ -3,12 +3,17 @@ import { serverFetch } from "../core/Server";
 const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
 
 
-export const getClasses = async (querystring , trainerId= null)=>{
+export const getClasses = async (querystring, trainerId = null, isAdmin = false) => {
+  const url = trainerId
+    ? `/api/classes?${querystring}&trainerId=${trainerId}`
+    : isAdmin
+    ? `/api/classes?${querystring}&isAdmin=true`
+    : `/api/classes?${querystring}`;
 
-    const url = trainerId ? `/api/classes?${querystring}&trainerId=${trainerId}` : `/api/classes?${querystring}`
+    console.log(url)
 
-    return serverFetch(url)
-}
+  return serverFetch(url);
+};
 
 export const  getFamousClasses = async ()=>{
     return serverFetch(`/api/classes/popular`)
