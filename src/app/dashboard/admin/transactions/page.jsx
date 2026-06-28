@@ -1,3 +1,9 @@
-export default function Transactions() {
-  return <>Transactions</>;
+import TransactionTable from "./TransactionTable";
+
+export default function TransactionsPage() {
+  return <>
+  
+  <TransactionTable></TransactionTable>
+  
+  </>;
 }

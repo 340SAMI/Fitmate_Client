@@ -1,3 +1,7 @@
+import ManageForumTable from "./ManageForumTable";
+
 export default function ManagePosts() {
-  return <>Manage Forum Posts</>;
+  return <>
+  <ManageForumTable></ManageForumTable>
+  </>;
 }

@@ -7,6 +7,9 @@ export default function DashboardHeader() {
   const key = pathname.split("/").pop();
 
   const pageInfo = {
+    // ===========================
+    // ADMIN
+    // ===========================
     overview: {
       section: "ADMIN DASHBOARD",
       title: "Platform Overview",
@@ -61,9 +64,49 @@ export default function DashboardHeader() {
       description:
         "Create a new announcement or discussion for the community.",
     },
+
+    // ===========================
+    // USER
+    // ===========================
+    "user-overview": {
+      section: "USER DASHBOARD",
+      title: "Dashboard Overview",
+      description:
+        "View your activity, bookings, favorites, and account progress at a glance.",
+    },
+
+    "booked-classes": {
+      section: "MY CLASSES",
+      title: "Booked Classes",
+      description:
+        "Manage your upcoming fitness sessions and keep track of your booked classes.",
+    },
+
+    "apply-trainer": {
+      section: "TRAINER APPLICATION",
+      title: "Apply as Trainer",
+      description:
+        "Submit your application to become a certified trainer and start sharing your expertise.",
+    },
+
+    favorites: {
+      section: "FAVORITES",
+      title: "Favorite Classes",
+      description:
+        "Access all your saved classes in one place and quickly book them anytime.",
+    },
   };
 
-  const page = pageInfo[key] || {
+  const isUserDashboard = pathname.includes("/dashboard/user");
+
+  const lookupKey =
+    key === "overview"
+      ? isUserDashboard
+        ? "user-overview"
+        : "overview"
+      : key;
+
+  const page = pageInfo[lookupKey] || {
     section: "DASHBOARD",
     title: "Dashboard",
     description: "",

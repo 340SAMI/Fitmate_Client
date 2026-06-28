@@ -1,11 +1,9 @@
 import { serverFetch } from "../core/Server";
 
-export const getForumPosts = async (authorId = null) => {
-  const url = authorId
-    ? `/api/forum?authorId=${authorId}`
-    : `/api/forum`;
-  return serverFetch(url);
-}
+export const getForumPosts = async (authorId = null, queryString = "") => {
+  const uri = authorId? `/api/forum?authorId=${authorId}&${queryString}`: `/api/forum?${queryString}`
+  return serverFetch(uri);
+};
 
 
 

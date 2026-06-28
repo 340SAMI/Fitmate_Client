@@ -1,15 +1,11 @@
 import { serverFetch } from "../core/Server"
 
-export const getPurchase = async (userId = null, classId = null) => {
-  const url =
-    userId && classId
-      ? `/api/purchases?userId=${userId}&classId=${classId}`
-      : userId
-      ? `/api/purchases?userId=${userId}`
-      : classId
-      ? `/api/purchases?classId=${classId}`
-      : "/api/purchases";
-
+export const getPurchase = async (userId = null, classId = null, queryString = "") => {
+  const parts = [];
+  if (userId) parts.push(`userId=${userId}`);
+  if (classId) parts.push(`classId=${classId}`);
+  if (queryString) parts.push(queryString);
+  const url = `/api/purchases${parts.length ? `?${parts.join("&")}` : ""}`;
   return serverFetch(url);
 };
 
