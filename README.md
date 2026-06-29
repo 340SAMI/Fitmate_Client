@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💪 IronPulse — Fitness & Gym Management Platform
 
-## Getting Started
+A comprehensive fitness platform for gym enthusiasts, trainers, and administrators. Discover classes, book sessions, track your fitness journey, and engage with a thriving community forum.
 
-First, run the development server:
+---
+
+## 🌐 Live URL
+
+> [https://your-live-link.vercel.app](https://your-live-link.vercel.app)
+
+---
+
+## ✨ Key Features
+
+### 👤 User
+- Register and log in via credentials or Google (Better Auth)
+- Browse and search fitness classes by name and category
+- Book classes via Stripe payment
+- Save favorite classes to a personal dashboard
+- Apply to become a trainer
+- Read, comment, like, and dislike community forum posts
+
+### 🏋️ Trainer
+- Create and manage fitness classes (pending admin approval)
+- View enrolled students per class
+- Post and manage articles on the community forum
+
+### 🛡️ Admin
+- Manage all users — block/unblock, promote to admin
+- Approve or reject trainer applications with feedback
+- Demote existing trainers
+- Approve, reject, or delete submitted classes
+- Moderate all community forum posts
+- View full Stripe payment transaction history
+- Post on the community forum
+
+### 🔒 Security & Access Control
+- Role-based access control (User / Trainer / Admin)
+- Blocked users cannot book, apply, or comment
+- Private routes protected — no redirect on reload
+- Environment variables for all sensitive keys
+
+---
+
+## 📦 NPM Packages Used
+
+| Package | Purpose |
+|---|---|
+| `next` | React framework |
+| `react` / `react-dom` | UI library |
+| `better-auth` | Authentication (credentials + Google) |
+| `@stripe/stripe-js` | Stripe frontend SDK |
+| `stripe` | Stripe backend SDK |
+| `mongoose` / `mongodb` | MongoDB database |
+| `axios` | HTTP requests |
+| `framer-motion` | Homepage animations |
+| `react-hot-toast` | Toast notifications |
+| `tailwindcss` | Utility-first CSS styling |
+| `lucide-react` | Icons |
+| `react-hook-form` | Form handling |
+| `imgbb-uploader` | Image uploads to ImgBB |
+| `date-fns` | Date formatting |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account
+- Stripe account
+- ImgBB API key
+
+### Installation
+
+```bash
+git clone https://github.com/your-username/ironpulse-client.git
+cd ironpulse-client
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root:
+
+```env
+NEXT_PUBLIC_BASE_URL=http://localhost:5000
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+BETTER_AUTH_SECRET=your_better_auth_secret
+BETTER_AUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+### Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🗂️ Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                  # Next.js App Router pages
+│   ├── (public)/         # Home, Classes, Forum
+│   ├── (private)/        # Class Details, Forum Post, Payment
+│   └── dashboard/        # Role-based dashboard pages
+├── components/           # Reusable UI components
+├── lib/                  # API helpers, auth config
+└── styles/               # Global styles
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> *(Add screenshots here after deployment)*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 👨‍💻 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Your Name**
+- GitHub: [@your-username](https://github.com/your-username)
+- Email: your@email.com
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 License
+
+This project is for educational purposes only.
