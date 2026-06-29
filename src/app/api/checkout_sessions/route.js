@@ -15,6 +15,8 @@ export async function POST(request) {
     const userId = formData.get('userId')
     const name = formData.get('name')
     const trainerId = formData.get('trainerId')
+    const trainerName = formData.get('trainerName')
+    const difficulty = formData.get('difficulty')
     const unitAmount = Number(rawPrice) * 100
 
     if (!Number.isFinite(unitAmount) || unitAmount <= 0) {
@@ -49,6 +51,8 @@ export async function POST(request) {
         userId: userId?.toString() || '',
         trainerId: trainerId?.toString() || '',
         price: unitAmount,
+        trainerName: trainerName,
+        difficulty: difficulty,
         mainPrice: rawPrice,
         name: name?.toString() || '',
       },

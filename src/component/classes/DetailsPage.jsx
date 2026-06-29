@@ -52,9 +52,13 @@ export default function DetailsPage({ classes, userId }) {
     try {
 
       const favoriteData = {
-        ...classes,
-        classId: classes._id,
-        userId
+          classId: classes._id,
+          userId,
+          className: classes.className,
+          image: classes.image,
+          trainerName: classes.trainerName,
+          price: classes.price,
+          category: classes.category,
       }
       const data = await setFavorite(favoriteData)
       
@@ -234,6 +238,8 @@ export default function DetailsPage({ classes, userId }) {
                   <input type="hidden" name="userId" value={userId} />
                   <input type="hidden" name="name" value={classes.className} />
                   <input type="hidden" name="trainerId" value={classes.trainerId} />
+                  <input type="hidden" name="trainerName" value={classes.trainerName} />
+                  <input type="hidden" name="difficulty" value={classes.difficulty} />
                   <button
                     type="submit"
                     className="w-full rounded-xl bg-[#8B5CF6] py-3 text-sm font-bold text-white shadow-lg shadow-[#8B5CF6]/25 transition hover:bg-[#7C3AED]"
