@@ -1,6 +1,11 @@
 import { getUserSession } from "@/lib/core/Session";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: 'User'
+}
+
+
 export default async function DashboardRoot() {
   const user = await getUserSession();
 

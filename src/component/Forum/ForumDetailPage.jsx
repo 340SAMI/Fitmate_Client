@@ -20,47 +20,67 @@ export default function ForumDetailPage({ post: initialPost, user }) {
       month: "short", day: "numeric", year: "numeric",
     });
 
-  const handleLike = async () => {
-    if (!userId) { toast.error("Please sign in to vote"); return; }
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forum/${post._id}/like`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
-      if (!res.ok) throw new Error();
-      setPost((prev) => ({
-        ...prev,
-        likes: hasLiked
-          ? prev.likes.filter((id) => id !== userId)
-          : [...(prev.likes ?? []), userId],
-        dislikes: prev.dislikes?.filter((id) => id !== userId) ?? [],
-      }));
-    } catch {
-      toast.error("Failed to update like");
-    }
-  };
+const handleLike = async () => {
+  if (!userId) { toast.error("Please sign in to vote"); return; }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forum/${post._id}/like`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    
 
-  const handleDislike = async () => {
-    if (!userId) { toast.error("Please sign in to vote"); return; }
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forum/${post._id}/dislike`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
-      if (!res.ok) throw new Error();
-      setPost((prev) => ({
-        ...prev,
-        dislikes: hasDisliked
-          ? prev.dislikes.filter((id) => id !== userId)
-          : [...prev.dislikes,  userId],
-        likes: prev.likes?.filter((id) => id !== userId) ?? [],
-      }));
-    } catch {
-      toast.error("Failed to update dislike");
+    if (res.status === 403) {
+      console.log(res.status)
+      const data = await res.json();
+      console.log(data)
+      toast.error(data.error);
+      return;
     }
-  };
+
+    if (!res.ok) throw new Error();
+
+    setPost((prev) => ({
+      ...prev,
+      likes: hasLiked
+        ? prev.likes.filter((id) => id !== userId)
+        : [...(prev.likes ?? []), userId],
+      dislikes: prev.dislikes?.filter((id) => id !== userId) ?? [],
+    }));
+  } catch {
+    toast.error("Failed to update like");
+  }
+};
+
+const handleDislike = async () => {
+  if (!userId) { toast.error("Please sign in to vote"); return; }
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forum/${post._id}/dislike`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (res.status === 403) {
+      console.log(res.status)
+      const data = await res.json();
+      toast.error(data.error);
+      return;
+    }
+
+    if (!res.ok) throw new Error();
+
+    setPost((prev) => ({
+      ...prev,
+      dislikes: hasDisliked
+        ? prev.dislikes.filter((id) => id !== userId)
+        : [...(prev.dislikes ?? []), userId],
+      likes: prev.likes?.filter((id) => id !== userId) ?? [],
+    }));
+  } catch {
+    toast.error("Failed to update dislike");
+  }
+};
 
   const handleComment = async () => {
     if (!userId) { toast.error("Please sign in to comment"); return; }

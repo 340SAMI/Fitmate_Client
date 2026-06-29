@@ -7,9 +7,14 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata = {
-  title: "FitMate — Fitness & Gym Management",
+  title:{
+    default:"FitMate — Fitness & Gym Management",
+    template: '%s | FitMate'
+  }, 
   description: "Book classes, follow trainers, track your fitness journey",
 };
+
+
 
 export default function RootLayout({ children }) {
   return (

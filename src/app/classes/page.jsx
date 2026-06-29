@@ -1,6 +1,9 @@
 ﻿import ClassListingContainer from "@/component/classes/ClassListingContainer";
 import { getClasses } from "@/lib/api/classes";
 
+export const metadata = {
+  title: 'All Classes'
+}
 export default async function ClassesPage({ searchParams }) {
   const filters = await searchParams;
   const search = filters.search ?? "";
