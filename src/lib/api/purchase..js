@@ -1,4 +1,5 @@
-import { serverFetch } from "../core/Server"
+import { serverFetch } from "../core/fetch";
+
 
 export const getPurchase = async (userId = null, classId = null, queryString = "") => {
   const parts = [];

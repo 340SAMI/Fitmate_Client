@@ -1,4 +1,5 @@
-import { serverFetch } from "../core/Server"
+import { serverFetch } from "../core/fetch"
+
 
 export const adminStats = async (adminId)=>{
     return serverFetch(`/api/admin/stats/${adminId}`)

@@ -1,4 +1,5 @@
-import { serverFetch } from "../core/Server";
+import { serverFetch } from "../core/fetch";
+
 
 const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
 
