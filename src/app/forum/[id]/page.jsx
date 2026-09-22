@@ -1,4 +1,4 @@
-
+export const dynamic = 'force-dynamic';
 import ForumDetailPage from '@/component/Forum/ForumDetailPage';
 import { getForumById } from '@/lib/api/forums';
 import { getUserSession } from '@/lib/core/Session';

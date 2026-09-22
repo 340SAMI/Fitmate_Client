@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import ForumListingContainer from "@/component/Forum/ForumListingContainer";
 import { getForumPosts } from "@/lib/api/forums";
 

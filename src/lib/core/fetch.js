@@ -1,7 +1,7 @@
-const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const serverFetch = async (path)=>{
-    const res = await fetch(`${baseUrl}${path}`)
+export const serverFetch = async (path) => {
+  const res = await fetch(`${baseUrl}${path}`)
 
-    return res.json()
+  return res.json()
 }
