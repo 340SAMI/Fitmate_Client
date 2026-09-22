@@ -1,4 +1,4 @@
-# 💪 IronPulse — Fitness & Gym Management Platform
+# 💪 Fitmate — Fitness & Gym Management Platform
 
 A comprehensive fitness platform for gym enthusiasts, trainers, and administrators. Discover classes, book sessions, track your fitness journey, and engage with a thriving community forum.
 
